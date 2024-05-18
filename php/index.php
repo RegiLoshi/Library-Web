@@ -6,8 +6,9 @@
 
 
 
-        <div class="container">
+    <div class="container">
     <h1 class="text-center mt-5">Welcome to Our Portal</h1>
+    <a href="adminLogin.php" class="btn btn-outline-info ml-auto" >Admin Login</a>
 
     <!-- User Login/Signup Section -->
     <div class="row login-section">
