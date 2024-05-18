@@ -5,10 +5,10 @@ $sName = "localhost";
 # user name
 $uName = "root";
 # password
-$pass = "";
+$pass = "root";
 
 # database name
-$db_name = "online_book_store_db";
+$db_name = "library";
 
 
 // creating database connection 
