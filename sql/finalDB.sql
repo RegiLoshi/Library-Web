@@ -13,8 +13,7 @@ CREATE TABLE GeneralUser (
   gender ENUM('Male', 'Female') NOT NULL,
   PRIMARY KEY (UserId),
   UNIQUE (email),
-  UNIQUE (username),
-  UNIQUE (password)
+  UNIQUE (username)
 );
 
 CREATE TABLE BookCategory (
@@ -56,8 +55,7 @@ CREATE TABLE Personnel (
   Role ENUM('Admin', 'Librarian') NOT NULL,
   PRIMARY KEY (PersonnelId),
   UNIQUE (username),
-  UNIQUE (email),
-  UNIQUE (password)
+  UNIQUE (email)
 );
 
 CREATE TABLE belongsTo (
@@ -86,11 +84,11 @@ CREATE TABLE manages (
 
 -- Insert GeneralUser data
 INSERT INTO GeneralUser (firstName, lastName, email, username, password, gender) VALUES
-('John', 'Doe', 'john.doe@example.com', 'johndoe', 'password123', 'Male'),
-('Charlie', 'Brown', 'charlie.brown@example.com', 'charlieb', 'charlie123', 'Male'),
-('Dana', 'White', 'dana.white@example.com', 'danawhite', 'dana123', 'Female'),
-('Alice', 'Johnson', 'alice.johnson@example.com', 'alicejohnson', 'alice123', 'Female'),
-('Bob', 'Williams', 'bob.williams@example.com', 'bobwilliams', 'bob123', 'Male');
+('John', 'Doe', 'john.doe@example.com', 'johndoe', '9e301c6087cac6016393b1ace4fa8965', 'Male'),
+('Charlie', 'Brown', 'charlie.brown@example.com', 'charlieb', 'c020efea82ade269335dcd48ff8226f2', 'Male'),
+('Dana', 'White', 'dana.white@example.com', 'danawhite', 'a6640f907f5b1434e0fe3e7b3478de0f', 'Female'),
+('Alice', 'Johnson', 'alice.johnson@example.com', 'alicejohnson', '00d3e7625c14669fc8f6368323531ac8', 'Female'),
+('Bob', 'Williams', 'bob.williams@example.com', 'bobwilliams', '81839aaf7cbf9c84cb36d0d008c605a5', 'Male');
 
 -- Insert Personnel data
 INSERT INTO Personnel (username, email, gender, firstName, lastName, password, Role) VALUES
