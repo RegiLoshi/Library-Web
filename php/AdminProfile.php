@@ -1,28 +1,34 @@
 <?php
-include 'header.php';
-include 'dbConnection.php';
-include 'CheckAdminLogin.php';
-session_start();
-if (!is_admin_login()) {
-    header('location:adminLogin.php');
-}
-$query = "
+    require_once('header.php');
+    require_once('dbConnection.php');
+    require_once('CheckAdminLogin.php');
+    
+    session_start();
+    if (!is_admin_login()) {
+        header('location:adminLogin.php');
+    }
+    
+    $query = "
     SELECT * FROM personnel
     WHERE PersonnelId = '" . $_SESSION["admin_id"] . "'
     ";
-$result = $conn->query($query);
-$message = '';
-$error = '';
-if (isset($_POST['edit_admin'])) {
-    $formdata = array();
-    if (empty($_POST['admin_email'])) {
-        $error .= '<li>Email Address is required</li>';
-    } else {
-        if (!filter_var($_POST["admin_email"], FILTER_VALIDATE_EMAIL)) {
-            $error .= '<li>Invalid Email Address</li>';
+    
+    $result = $conn->query($query);
+    
+    $message = '';
+    
+    $error = '';
+    
+    if (isset($_POST['edit_admin'])) {
+        $formdata = array();
+        if (empty($_POST['admin_email'])) {
+            $error .= '<li>Email Address is required</li>';
         } else {
-            $formdata['admin_email'] = $_POST['admin_email'];
-        }
+            if (!filter_var($_POST["admin_email"], FILTER_VALIDATE_EMAIL)) {
+                $error .= '<li>Invalid Email Address</li>';
+            } else {
+                $formdata['admin_email'] = $_POST['admin_email'];
+            }
     }
 
     if (empty($_POST['admin_password'])) {
@@ -33,6 +39,10 @@ if (isset($_POST['edit_admin'])) {
 
     if ($error == '') {
         $admin_id = $_SESSION['admin_id'];
+        
+        $salt = 'WebDevLibrary12345$()';
+        $salted = $formdata['admin_password'].$salt;
+		$formdata['admin_password'] = md5($salted);
 
         $data = array(
             ':admin_email' => $formdata['admin_email'],
@@ -53,8 +63,6 @@ if (isset($_POST['edit_admin'])) {
 
         $message = 'User Data Edited';
     }
-
-
 }
 
 
@@ -63,11 +71,12 @@ if (isset($_POST['edit_admin'])) {
 <div class="d-flex">
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
         <h4 class="text-center text-light">Admin Panel</h4>
-        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a>
+        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a> 
         <a class="nav-link text-light" href="category.php">Category</a>
         <a class="nav-link text-light" href="#">Author</a>
         <a class="nav-link text-light" href="#">Book</a>
         <a class="nav-link text-light" href="#">User</a>
+        <a class="nav-link text-light" href="#">Settings</a>
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
 
@@ -76,6 +85,17 @@ if (isset($_POST['edit_admin'])) {
             <i class="fas fa-user-edit"></i> Edit Profile Details
         </div>
         <div class="card-body">
+            <?php
+
+            if ($error != '') {
+                echo '<div class="alert alert-danger alert-dismissible fade show d-flex" role="alert"><ul class="list-unstyled">' . $error . '</ul></div>';
+            }
+
+            if ($message != '') {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">' . $message . '</div>';
+            }
+
+            ?>
 
             <?php
 
@@ -98,7 +118,7 @@ if (isset($_POST['edit_admin'])) {
                     </div>
                 </form>
 
-            <?php
+                <?php
             }
 
             ?>
