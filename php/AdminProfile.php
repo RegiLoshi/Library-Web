@@ -1,28 +1,34 @@
 <?php
-include 'header.php';
-include 'dbConnection.php';
-include 'CheckAdminLogin.php';
-session_start();
-if (!is_admin_login()) {
-    header('location:adminLogin.php');
-}
-$query = "
+    require_once('header.php');
+    require_once('dbConnection.php');
+    require_once('CheckAdminLogin.php');
+    
+    session_start();
+    if (!is_admin_login()) {
+        header('location:adminLogin.php');
+    }
+    
+    $query = "
     SELECT * FROM personnel
     WHERE PersonnelId = '" . $_SESSION["admin_id"] . "'
     ";
-$result = $conn->query($query);
-$message = '';
-$error = '';
-if (isset($_POST['edit_admin'])) {
-    $formdata = array();
-    if (empty($_POST['admin_email'])) {
-        $error .= '<li>Email Address is required</li>';
-    } else {
-        if (!filter_var($_POST["admin_email"], FILTER_VALIDATE_EMAIL)) {
-            $error .= '<li>Invalid Email Address</li>';
+    
+    $result = $conn->query($query);
+    
+    $message = '';
+    
+    $error = '';
+    
+    if (isset($_POST['edit_admin'])) {
+        $formdata = array();
+        if (empty($_POST['admin_email'])) {
+            $error .= '<li>Email Address is required</li>';
         } else {
-            $formdata['admin_email'] = $_POST['admin_email'];
-        }
+            if (!filter_var($_POST["admin_email"], FILTER_VALIDATE_EMAIL)) {
+                $error .= '<li>Invalid Email Address</li>';
+            } else {
+                $formdata['admin_email'] = $_POST['admin_email'];
+            }
     }
 
     if (empty($_POST['admin_password'])) {
@@ -57,8 +63,6 @@ if (isset($_POST['edit_admin'])) {
 
         $message = 'User Data Edited';
     }
-
-
 }
 
 

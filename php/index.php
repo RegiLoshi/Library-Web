@@ -1,6 +1,6 @@
 <?php
-    include 'header.php';
-    include 'dbConnection.php';
+    require_once('header.php');
+    require_once('dbConnection.php');
 
     session_start();
     if(isset($_SESSION['admin_id'])) {
@@ -112,7 +112,7 @@
                     <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
                 </div>
                 <button type="submit" name="login_button" class="btn btn-primary btn-block">Login</button>
-                <a href="userSignUp.php" class="btn btn-secondary btn-block">Signup</a>
+                <a href="userSignUp.php" class="btn btn-secondary btn-block">Signup</a></br>
                 <div class="text-center"> 
                     <a href="MainView.php">Visit as guest</a>
                 </div>

@@ -1,6 +1,6 @@
 <?php
-    include 'dbConnection.php';
-    include 'header.php';
+    require_once('dbConnection.php');
+    require_once('header.php');
 
     // Check if a session already exists
     session_start();
