@@ -1,12 +1,12 @@
 <?php
-include 'header.php';
-include 'CheckAdminLogin.php';
-session_start();
-
-if(is_admin_login() == false)
-{
-    header('location:adminLogin.php');
-}
+    include 'header.php';
+    include 'dbConnection.php';
+    include 'CheckAdminLogin.php';
+    session_start();
+    if(!is_admin_login())
+    {
+        header('location:adminLogin.php');
+    }
 
 
 ?>
@@ -21,11 +21,8 @@ if(is_admin_login() == false)
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
 
-    <div class="flex-grow-1 p-3">
-        <h1>Welcome to the Admin Panel</h1>
-        <p>Select an option from the sidebar to manage the library.</p>
-    </div>
-    </div>
+
+</div>
 
 <?php
 include 'footer.php';
