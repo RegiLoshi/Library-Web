@@ -27,7 +27,7 @@ if(is_admin_login() == false)
         <h1>Welcome to the Admin Panel</h1>
         <p>Select an option from the sidebar to manage the library.</p>
     </div>
-    </div>
+</div>
 
 <?php
 include 'footer.php';
