@@ -34,15 +34,18 @@
     if (empty($_POST['admin_password'])) {
         $error .= '<li>Password is required</li>';
     } else {
-        $formdata['admin_password'] = $_POST['admin_password'];
+        foreach($result as $row)
+        if($_POST['admin_password']==$row['password']){
+            $formdata['admin_password'] = $_POST['admin_password'];
+        } else{
+            $salt = 'WebDevLibrary12345$()';
+            $salted = $_POST['admin_password'] . $salt;
+            $formdata['admin_password'] = md5($salted);
+        }
     }
 
     if ($error == '') {
         $admin_username = $_SESSION['admin_id'];
-        
-        $salt = 'WebDevLibrary12345$()';
-        $salted = $formdata['admin_password'].$salt;
-		$formdata['admin_password'] = md5($salted);
 
         $data = array(
             ':admin_email' => $formdata['admin_email'],

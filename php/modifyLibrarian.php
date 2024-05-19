@@ -21,9 +21,8 @@ if (isset($_POST['username'])) {
 }
 
 $query = "SELECT * FROM user WHERE username = :username";
-$statement = $conn->prepare($query);
-$statement->execute([':username' => $username]);
-$librarian = $statement->fetch(PDO::FETCH_ASSOC);
+$result = $conn->prepare($query);
+$result->execute([':username' => $username]);
 
 $message = '';
 $error = '';
@@ -50,14 +49,19 @@ if (isset($_POST['edit_librarian'])) {
     if (empty($_POST['librarian_password'])) {
         $error .= '<li>Password is required</li>';
     } else {
-        $formdata['librarian_password'] = $_POST['librarian_password'];
+        foreach($result as $row)
+        if($_POST['librarian_password']==$row['password']){
+            $formdata['librarian_password'] = $_POST['librarian_password'];
+        } else{
+            $salt = 'WebDevLibrary12345$()';
+            $salted = $_POST['librarian_password'] . $salt;
+            $formdata['librarian_password'] = md5($salted);
+        }
+        
     }
 
     if ($error == '') {
-        $salt = 'WebDevLibrary12345$()';
-        $salted = $formdata['librarian_password'] . $salt;
-        $formdata['librarian_password'] = md5($salted);
-
+        
         $data = array(
             ':librarian_email' => $formdata['librarian_email'],
             ':librarian_password' => $formdata['librarian_password'],
@@ -75,8 +79,8 @@ if (isset($_POST['edit_librarian'])) {
         $updateStatement->execute($data);
 
         $message = 'User Data Edited';
-        $statement->execute([':username' => $username]);
-        $librarian = $statement->fetch(PDO::FETCH_ASSOC);
+        $result = $conn->prepare($query);
+        $result->execute([':username' => $username]);
     }
 }
 ?>
@@ -106,38 +110,43 @@ if (isset($_POST['edit_librarian'])) {
             }
             ?>
 
-            <?php if ($librarian) { ?>
+            <?php
+
+            foreach ($result as $row) {
+                ?>
                 <form method="post">
                     <div class="mb-3">
                         <label class="form-label">Username</label>
-                        <input type="text" name="librarian_username" id="librarian_username" class="form-control" value="<?php echo htmlspecialchars($librarian['username']); ?>" readonly />
+                        <input type="text" name="librarian_username" id="librarian_username" class="form-control" 
+                            value="<?php echo $row['username']; ?>" readonly />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" name="librarian_name" id="librarian_name" class="form-control" value="<?php echo htmlspecialchars($librarian['firstName']); ?>" readonly />
+                        <input type="text" name="librarian_name" id="librarian_name" class="form-control" 
+                            value="<?php echo $row['firstName']; ?>" readonly />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Surname</label>
-                        <input type="text" name="librarian_surname" id="librarian_surname" class="form-control" value="<?php echo htmlspecialchars($librarian['lastName']); ?>" readonly />
+                        <input type="text" name="librarian_surname" id="librarian_surname" class="form-control" 
+                            value="<?php echo $row['lastName']; ?>" readonly />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
-                        <input type="text" name="librarian_email" id="librarian_email" class="form-control" value="<?php echo htmlspecialchars($librarian['email']); ?>" />
+                        <input type="text" name="librarian_email" id="librarian_email" class="form-control" 
+                            value="<?php echo $row['email']; ?>" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
                         <input type="password" name="librarian_password" id="librarian_password" class="form-control"
-                            value="<?php echo str_repeat('*', min(10, strlen($librarian['password']))); ?>" />
+                            value="<?php echo $row['password']; ?>" />
                     </div>
                     <div class="mt-4 mb-0">
                         <input type="submit" name="edit_librarian" class="btn btn-primary" value="Edit" />
                         <input type="submit" name="delete" class="btn btn-danger" value="Delete" />
-                        <input type="hidden" name="username" value="<?php echo htmlspecialchars($librarian['username']); ?>">
+                        <input type="hidden" name="username" value="<?php echo $row['username']; ?>">
                     </div>
                 </form>
-            <?php } else { ?>
-                <div class="alert alert-warning">Librarian not found.</div>
-            <?php } ?>
+            <?php }  ?>
         </div>
     </div>
 </div>
