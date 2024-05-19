@@ -5,7 +5,7 @@ $sName = "localhost";
 # user name
 $uName = "root";
 # password
-$pass = "root";
+$pass = "";
 
 # database name
 $db_name = "library";
