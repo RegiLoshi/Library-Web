@@ -204,4 +204,23 @@ $(document).ready(function(){
 });
 </script>
 
+<script>
+$(document).ready(function(){
+    $('.lend').click(function(){
+        var isbn = $(this).data('isbn');
+        $.ajax({
+            type: 'POST',
+            url: 'lendBook.php',
+            data: { isbn: isbn},
+            success: function(response) {
+                alert(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+
 
