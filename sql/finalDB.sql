@@ -51,8 +51,8 @@ CREATE TABLE hasWritten
   BookId INT NOT NULL,
   authorId INT NOT NULL,
   PRIMARY KEY (BookId, authorId),
-  FOREIGN KEY (BookId) REFERENCES Book(BookId),
-  FOREIGN KEY (authorId) REFERENCES Author(authorId)
+  FOREIGN KEY (BookId) REFERENCES Book(BookId) ON DELETE CASCADE,
+  FOREIGN KEY (authorId) REFERENCES Author(authorId) ON DELETE CASCADE 
 );
 
 CREATE TABLE borrows
@@ -71,8 +71,8 @@ CREATE TABLE belongsTo
   BookId INT NOT NULL,
   BookCategoryId INT NOT NULL,
   PRIMARY KEY (BookId, BookCategoryId),
-  FOREIGN KEY (BookId) REFERENCES Book(BookId),
-  FOREIGN KEY (BookCategoryId) REFERENCES BookCategory(BookCategoryId)
+  FOREIGN KEY (BookId) REFERENCES Book(BookId) ON DELETE CASCADE,
+  FOREIGN KEY (BookCategoryId) REFERENCES BookCategory(BookCategoryId) ON DELETE CASCADE
 );
 
 INSERT INTO User (firstName, lastName, email, username, password, gender, Role) VALUES
@@ -83,11 +83,11 @@ INSERT INTO User (firstName, lastName, email, username, password, gender, Role) 
 ('Carol', 'White', 'carol.white@example.com', 'carolw', 'password5', 'F', 'user');
 
 INSERT INTO Book (ISBN, title, description, bookURL, supplierName, Quantity) VALUES
-('9781234567890', 'Book One', 'Description for Book One', 'https://m.media-amazon.com/images/I/71k--OLmZKL._AC_UF894,1000_QL80_.jpg', 'Supplier One', 10),
-('9781234567891', 'Book Two', 'Description for Book Two', 'https://m.media-amazon.com/images/I/71k--OLmZKL._AC_UF894,1000_QL80_.jpg', 'Supplier Two', 5),
-('9781234567892', 'Book Three', 'Description for Book Three', 'https://m.media-amazon.com/images/I/71k--OLmZKL._AC_UF894,1000_QL80_.jpg', 'Supplier One', 7),
-('9781234567893', 'Book Four', 'Description for Book Four', 'https://m.media-amazon.com/images/I/71k--OLmZKL._AC_UF894,1000_QL80_.jpg', 'Supplier Three', 3),
-('9781234567894', 'Book Five', 'Description for Book Five', 'https://m.media-amazon.com/images/I/71k--OLmZKL._AC_UF894,1000_QL80_.jpg', 'Supplier Two', 12);
+('9781234567890', 'Book One', 'Description for Book One', 'http://example.com/book1', 'Supplier One', 10),
+('9781234567891', 'Book Two', 'Description for Book Two', 'http://example.com/book2', 'Supplier Two', 5),
+('9781234567892', 'Book Three', 'Description for Book Three', 'http://example.com/book3', 'Supplier One', 7),
+('9781234567893', 'Book Four', 'Description for Book Four', 'http://example.com/book4', 'Supplier Three', 3),
+('9781234567894', 'Book Five', 'Description for Book Five', 'http://example.com/book5', 'Supplier Two', 12);
 
 INSERT INTO Author (firstName, lastName) VALUES
 ('Mark', 'Twain'),
