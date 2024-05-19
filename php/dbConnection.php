@@ -5,7 +5,7 @@ $sName = "localhost";
 # user name
 $uName = "root";
 # password
-$pass = "";
+$pass = "root";
 
 // #klaudia's 
 // $sName = "localhost:3310";
