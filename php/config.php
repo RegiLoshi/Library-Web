@@ -1,5 +1,5 @@
 <?php
-    //IGNORE REGI HAS NO DATABASE PASSWORD RIPPPPPPPPPPP (very secure :w)
+    //IGNORE REGI'S DATABASE
     #Create database constants.
     define("HOST", "localhost");
     define("USERNAME", "root");
