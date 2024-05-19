@@ -1,6 +1,6 @@
 <?php
-include 'header.php';
 include 'CheckAdminLogin.php';
+include 'header.php';
 require("config.php");
 session_start();
 
@@ -60,9 +60,29 @@ $conn->close();
             </select><br><br>
             <input type="submit" value="Submit">
         </form>
+        <button id="deleteAccountBtn" class="btn btn-danger" style="margin-top: 20px;">Delete Account</button>
     </div>
 </div>
 
-<?php
-include 'footer.php';
-?>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+    $('#deleteAccountBtn').on('click', function() {
+        var confirmDelete = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+        if (confirmDelete) {
+            $.ajax({
+                url: 'deleteUserAccount.php',
+                type: 'POST',
+                dataType: 'text',
+                success: function(response) {
+                    alert(response);
+                    window.location.href = 'index.php'; // Redirect to login page
+                },
+                error: function(xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+    });
+});
+</script>
