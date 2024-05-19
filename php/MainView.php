@@ -1,10 +1,14 @@
 <!-- TO-DO
-1) SESSIONS
-2) AFTER WELCOME H1 TAG TO BE ADDED DYNAMIC USER USERNAME (SESSION HAS TO BEEN DONE)
 3) LOG OUT IN NAV BAR TO DIRECT TO SIGN OUT PAGE AND DESTROY SESSION
 4) VIEW DETAILS AJAX REQUEST TO BE FINISHED WHEN VIEWDETAILS PAGE IS FINISHED
 -->
 <!-- GET ALL BOOKS -->
+<?php
+session_start();
+?>
+
+
+</script>
 <html>
 <head>
         <title>Library</title>
@@ -27,7 +31,7 @@
       <a href="MainView.php">Home</a>
     </li>
     <li>
-      <a href="">User</a>
+      <a href="" id = "userProfile">User</a>
     </li>
     <li>
       <a href="logout.php" id="signOut">Sign Out</a>
@@ -119,6 +123,7 @@
             </a>
             <h6 class="mb-3">Written by: <?php echo $author_name; ?></h6>
             <button class="viewDetails btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-isbn="<?php echo $isbn; ?>">View Details</button>
+            <button class="btn btn-success lend" data-isbn="<?php echo $isbn; ?>">Lend The Book</button>
                 </div>
               </div>
             </div>
@@ -170,6 +175,19 @@
 
 </body>
 </html>
+
+<?php if (!isset($_SESSION['user_id'])): ?>
+<script>
+$(document).ready(function(){
+    $("#signOut").text("Login").attr("href", "index.php");
+    $("#userProfile").remove();
+    $(".lend").click(function(){
+        alert("You need to be logged in to lend a book");
+    });
+});
+</script>
+<?php endif; ?>
+
 
 <script>
 $(document).ready(function(){
