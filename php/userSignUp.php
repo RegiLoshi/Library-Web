@@ -8,6 +8,11 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+if(isset($_SESSION['admin_id'])) {
+    header('location:AdminView.php');
+    exit(); 
+}
+
 $message = '';
 
 if (isset($_POST["register_button"])) {

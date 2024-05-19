@@ -113,6 +113,9 @@
                 </div>
                 <button type="submit" name="login_button" class="btn btn-primary btn-block">Login</button>
                 <a href="userSignUp.php" class="btn btn-secondary btn-block">Signup</a>
+                <div class="text-center"> 
+                    <a href="MainView.php">Visit as guest</a>
+                </div>
             </form>
         </div>
     </div>
