@@ -4,7 +4,7 @@
 
     session_start();
     if (isset($_SESSION['user_id'])) {
-        header('location:MainView.php');
+        header('location:userProfile.php');
         exit();
     }
 

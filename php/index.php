@@ -8,8 +8,8 @@
         exit(); 
     }
 
-    if(isset($_SESSION['user_id'])){
-        header('location:MainnView.php');
+    if (isset($_SESSION['user_id'])) {
+        header('location:userProfile.php');
         exit();
     }
 
@@ -77,12 +77,12 @@
 				    {
 					$message = '<li>Wrong Password</li>';
 				    }
-			}
-		}	
-		else
-		{
-			$message = '<li>Wrong Email Address</li>';
-		}
+			    }
+		    }	
+		    else
+		    {
+		    	$message = '<li>Wrong Email Address</li>';
+		    }
         }    
     }
 
