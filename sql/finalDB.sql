@@ -8,7 +8,7 @@ CREATE TABLE User
   email VARCHAR(100) NOT NULL,
   username VARCHAR(50) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  gender ENUM('M', 'F', 'O') NOT NULL, -- 'M' for Male, 'F' for Female, 'O' for Other
+  gender ENUM('Male', 'Female') NOT NULL, 
   UserId INT NOT NULL AUTO_INCREMENT,
   Role VARCHAR(20) NOT NULL,
   PRIMARY KEY (UserId),
@@ -58,12 +58,12 @@ CREATE TABLE hasWritten
 CREATE TABLE borrows
 (
   BorrowedDate DATE NOT NULL,
-  Status enum('requested','borrowed','returned','overdue') NOT NULL,
+  Status enum('requested','borrowed','returned') NOT NULL,
   BookId INT NOT NULL,
   UserId INT NOT NULL,
   PRIMARY KEY (BookId, UserId),
-  FOREIGN KEY (BookId) REFERENCES Book(BookId) on delete cascade,
-  FOREIGN KEY (UserId) REFERENCES User(UserId) on delete cascade
+  FOREIGN KEY (BookId) REFERENCES Book(BookId) ON DELETE CASCADE,
+  FOREIGN KEY (UserId) REFERENCES User(UserId) ON DELETE CASCADE
 );
 
 CREATE TABLE belongsTo
@@ -76,11 +76,11 @@ CREATE TABLE belongsTo
 );
 
 INSERT INTO User (firstName, lastName, email, username, password, gender, Role) VALUES
-('John', 'Doe', 'john.doe@example.com', 'johndoe', 'password1', 'M', 'user'),
-('Jane', 'Smith', 'jane.smith@example.com', 'janesmith', 'password2', 'F', 'admin'),
-('Alice', 'Johnson', 'alice.johnson@example.com', 'alicej', 'password3', 'F', 'user'),
-('Bob', 'Brown', 'bob.brown@example.com', 'bobb', 'password4', 'M', 'user'),
-('Carol', 'White', 'carol.white@example.com', 'carolw', 'password5', 'F', 'user');
+('John', 'Doe', 'john.doe@example.com', 'johndoe', '9e301c6087cac6016393b1ace4fa8965', 'Male', 'user'),
+('Jane', 'Smith', 'admin@example.com', 'janesmith', '949af44980f54ae908b97bdf53ed507a', 'Female', 'admin'),
+('Alice', 'Johnson', 'librarian@example.com', 'alicej', 'e6bd0dbeb2d0baee9c956b32bdf114ce', 'Female', 'librarian'),
+('Bob', 'Brown', 'bob.brown@example.com', 'bobb', '81839aaf7cbf9c84cb36d0d008c605a5', 'Male', 'user'),
+('Carol', 'White', 'carol.white@example.com', 'carolw', '37c350cfcc9a8c3c2c0fc31268f3e77e', 'Female', 'user');
 
 INSERT INTO Book (ISBN, title, description, bookURL, supplierName, Quantity) VALUES
 ('9781234567890', 'Book One', 'Description for Book One', 'http://example.com/book1', 'Supplier One', 10),
@@ -104,25 +104,25 @@ INSERT INTO BookCategory (Quantity, name) VALUES
 (10, 'Biography');
 
 INSERT INTO hasWritten (BookId, authorId) VALUES
-(1, 1), -- Book One written by Mark Twain
-(2, 2), -- Book Two written by Jane Austen
-(3, 3), -- Book Three written by Charles Dickens
-(4, 4), -- Book Four written by J.K. Rowling
-(5, 5); -- Book Five written by Ernest Hemingway
+(1, 1), 
+(2, 2), 
+(3, 3), 
+(4, 4), 
+(5, 5); 
 
 INSERT INTO borrows (BorrowedDate, Status, BookId, UserId) VALUES
-('2024-05-01', 'borrowed', 1, 1), -- John borrowed Book One
-('2024-05-02', 'returned', 2, 2), -- Jane returned Book Two
-('2024-05-03', 'borrowed', 3, 3), -- Alice borrowed Book Three
-('2024-05-04', 'overdue', 4, 4), -- Bob has overdue Book Four
-('2024-05-05', 'requested', 5, 5); -- Carol requested Book Five
+('2024-05-01', 'borrowed', 1, 1), 
+('2024-05-02', 'returned', 2, 2), 
+('2024-05-03', 'borrowed', 3, 3), 
+('2024-05-04', 'requested', 4, 4), 
+('2024-05-05', 'requested', 5, 5); 
 
 INSERT INTO belongsTo (BookId, BookCategoryId) VALUES
-(1, 1), -- Book One belongs to Fiction
-(2, 2), -- Book Two belongs to Non-Fiction
-(3, 3), -- Book Three belongs to Science
-(4, 4), -- Book Four belongs to History
-(5, 5); -- Book Five belongs to Biography
+(1, 1), 
+(2, 2), 
+(3, 3), 
+(4, 4), 
+(5, 5); 
 
 select * from author;
 select * from belongsTo;

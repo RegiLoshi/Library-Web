@@ -13,6 +13,11 @@
         exit();
     }
 
+    if (isset($_SESSION['librarian_id'])) {
+        header('location:librarianProfile.php');
+        exit();
+    }
+
     $message = '';
 
     if(isset($_POST['login_button']))
@@ -54,7 +59,7 @@
             );
 
             $query = "
-            SELECT * FROM generaluser
+            SELECT * FROM user
             WHERE email = :userEmail
             ";
             $statement = $conn->prepare($query);
@@ -64,13 +69,13 @@
 		        {
 			    foreach($statement->fetchAll() as $row)
 			        {
-				    if($row['password'] == $formdata['userPassword'])
+				    if($row['password'] == $formdata['userPassword']&&$row['Role']=='user')
 				        {
                             session_start();
-					        $_SESSION['user_id'] = $row['email'];
-                            echo $_SESSION['email'];
+					        $_SESSION['user_id'] = $row['username'];
+                            echo $_SESSION['user_id'];
                     
-					        header('location:MainView.php');
+					        header('location:userProfile.php');
                             exit();
 				        }
 				    else
@@ -90,7 +95,7 @@
 ?>
     <div class="container">
     <h1 class="text-center mt-5">Welcome to Our Library!</h1>
-    <a href="adminLogin.php" class="btn btn-outline-info ml-auto" >Admin Login</a>
+    <a href="StaffLogin.php" class="btn btn-outline-info ml-auto" >Staff Login</a>
 
     <!-- User Login/Signup Section -->
     <div class="row login-section">

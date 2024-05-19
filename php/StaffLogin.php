@@ -10,7 +10,12 @@
     }
 
     if(isset($_SESSION['user_id'])){
-        header('location:MainnView.php');
+        header('location:userProfile.php');
+        exit();
+    }
+
+    if(isset($_SESSION['librarian_id'])){
+        header('location:librarianProfile.php');
         exit();
     }
 
@@ -20,43 +25,43 @@
     {
         $formdata = array();
 
-        if(empty($_POST["admin_email"]))
+        if(empty($_POST["email"]))
         {
             $message .= '<li>Email Address is Required</li>';
         }
         else{
-            if(!filter_var($_POST["admin_email"], FILTER_VALIDATE_EMAIL))
+            if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
 		        {
 			    $message .= '<li>Invalid Email Address</li>';
 		        }
 		    else
 		    {
-			    $formdata['admin_email'] = trim($_POST['admin_email']);
+			    $formdata['email'] = trim($_POST['email']);
 		    }
             
         }
 
-        if(empty($_POST['admin_password']))
+        if(empty($_POST['password']))
 	        {
 		    $message .= '<li>Password is required</li>';
 	        }
 	    else
 	        {
                 $salt = 'WebDevLibrary12345$()';
-                $salted = trim($_POST['admin_password']).$salt;
-		        $formdata['admin_password'] = md5($salted);
+                $salted = trim($_POST['password']).$salt;
+		        $formdata['password'] = md5($salted);
 	        }
 
 
         if($message == '')
         {
             $data = array(
-                ':admin_email' => $formdata['admin_email']
+                ':email' => $formdata['email']
             );
 
             $query = "
-            SELECT * FROM personnel
-            WHERE email = :admin_email
+            SELECT * FROM user
+            WHERE email = :email
             ";
             $statement = $conn->prepare($query);
             $statement->execute($data);
@@ -65,14 +70,23 @@
 		        {
 			    foreach($statement->fetchAll() as $row)
 			        {
-				    if($row['password'] == $formdata['admin_password'])
+				    if($row['password'] == $formdata['password'] && $row['Role']=='admin')
 				        {
                             session_start();
-					        $_SESSION['admin_id'] = $row['PersonnelId'];
+					        $_SESSION['admin_id'] = $row['username'];
                             echo $_SESSION['admin_id'];
                     
 					        header('location:AdminView.php');
+                            exit();
 				        }
+                    else if($row['password'] == $formdata['password'] && $row['Role']=='librarian'){
+                        session_start();
+                        $_SESSION['librarian_id'] = $row['username'];
+                        echo $_SESSION['librarian_id'];
+                
+                        header('location:librarianProfile.php');
+                        exit();
+                    }
 				    else
 				    {
 					$message = '<li>Wrong Password</li>';
@@ -97,16 +111,16 @@
 		}
 		?>
         <div class="card">
-            <div class="card-header">Admin Login</div>
+            <div class="card-header">Staff Login</div>
             <div class="card-body">
                 <form method="POST">
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="text" name="admin_email" id="admin_email" class="form-control" />
+                        <input type="text" name="email" id="email" class="form-control" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" name="admin_password" id="admin_password" class="form-control" />
+                        <input type="password" name="password" id="password" class="form-control" />
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                         <input type="submit" name="login_button" class="btn btn-primary" value="Login" />

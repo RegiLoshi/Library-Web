@@ -5,10 +5,8 @@ session_start();
 
 if(is_admin_login() == false)
 {
-    header('location:adminLogin.php');
+    header('location:StaffLogin.php');
 }
-
-
 
 ?>
 <div class="d-flex" id="navbar">

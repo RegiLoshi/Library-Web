@@ -6,7 +6,7 @@ require_once ('CheckAdminLogin.php');
 session_start();
 
 if (is_admin_login() == false) {
-    header('location:adminLogin.php');
+    header('location:StaffLogin.php');
     exit();
 }
 
@@ -31,7 +31,7 @@ if (isset($_POST['delete_button'])) {
 if (isset($_POST['add_button'])) {
     $category = $_POST['category'];
     $quantity = $_POST['quantity'];
-    $query = "INSERT INTO bookcategory (Category, Quantity) VALUES (:category, :quantity)";
+    $query = "INSERT INTO bookcategory (name, Quantity) VALUES (:category, :quantity)";
     $statement = $conn->prepare($query);
     if ($statement->execute([':category' => $category, ':quantity' => $quantity])) {
         $message = 'Category added successfully.';
@@ -47,7 +47,7 @@ if (isset($_POST['add_button'])) {
 
 $query = "
     SELECT * FROM bookcategory
-    ORDER BY Category ASC
+    ORDER BY name ASC
     ";
 
 $statement = $conn->prepare($query);
@@ -104,7 +104,7 @@ $statement->execute();
                         foreach ($statement->fetchAll() as $row) {
                             echo '
                             <tr>
-                                <td>' . $row["Category"] . '</td>
+                                <td>' . $row["name"] . '</td>
                                 <td>' . $row["Quantity"] . '</td>
                                 <td>
                                     <form method="POST" action="">

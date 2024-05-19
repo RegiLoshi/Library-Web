@@ -13,6 +13,11 @@
         exit(); 
     }
 
+    if (isset($_SESSION['librarian_id'])) {
+        header('location:librarianProfile.php');
+        exit();
+    }
+
     $message = '';
 
     if (isset($_POST["register_button"])) {
@@ -79,7 +84,7 @@
             );
 
             $query = "
-            SELECT * FROM generaluser
+            SELECT * FROM user
             WHERE email = :user_email_address
             ";
 
@@ -95,7 +100,7 @@
             );
 
             $query = "
-            SELECT * FROM generaluser
+            SELECT * FROM user
             WHERE username = :username
             ";
             $statement = $conn->prepare($query);
@@ -112,27 +117,29 @@
 				    ':gender'		        =>	$formdata['gender'],
 				    ':username'			    =>	$formdata['username'],
 				    ':user_email_address'	=>	$formdata['user_email_address'],
-				    ':user_password'		=>	$formdata['user_password']
+				    ':user_password'		=>	$formdata['user_password'],
+                    ':user_role'            =>  'user'
 			    );
 
                 $query = "
-			    INSERT INTO generaluser 
-                (firstName, lastName, email, username, password, gender) 
-                VALUES (:user_name, :user_surname, :user_email_address, :username, :user_password, :gender)
+			    INSERT INTO user 
+                (firstName, lastName, email, username, password, gender, Role) 
+                VALUES (:user_name, :user_surname, :user_email_address, :username, :user_password, :gender, :user_role)
 			    ";
 
                 $statement = $conn->prepare($query);
 			    $statement->execute($data);
 
                 session_start();
-			    $_SESSION['user_id'] = $formdata['user_email_address'];
-                header('location:MainView.php');
+			    $_SESSION['user_id'] = $formdata['username'];
+                header('location:userProfile.php');
                 exit();
             }
         }
     }
 
 ?>
+<a href="index.php" class="btn btn-outline-info ml-auto"  >User Login</a>
 <div class="d-flex align-items-center justify-content-center mt-5 mb-5" style="min-height:700px;">
     <div class="col-md-6">
         <?php

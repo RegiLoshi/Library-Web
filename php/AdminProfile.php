@@ -9,8 +9,8 @@
     }
     
     $query = "
-    SELECT * FROM personnel
-    WHERE PersonnelId = '" . $_SESSION["admin_id"] . "'
+    SELECT * FROM user
+    WHERE username = '" . $_SESSION["admin_id"] . "'
     ";
     
     $result = $conn->query($query);
@@ -38,7 +38,7 @@
     }
 
     if ($error == '') {
-        $admin_id = $_SESSION['admin_id'];
+        $admin_username = $_SESSION['admin_id'];
         
         $salt = 'WebDevLibrary12345$()';
         $salted = $formdata['admin_password'].$salt;
@@ -47,14 +47,14 @@
         $data = array(
             ':admin_email' => $formdata['admin_email'],
             ':admin_password' => $formdata['admin_password'],
-            ':admin_id' => $admin_id
+            ':admin_username' => $admin_username
         );
 
         $query = "
-		    UPDATE personnel
+		    UPDATE user
             SET email = :admin_email,
             password = :admin_password 
-            WHERE PersonnelId = :admin_id
+            WHERE username = :admin_username
 		";
 
         $statement = $conn->prepare($query);
@@ -62,6 +62,11 @@
         $statement->execute($data);
 
         $message = 'User Data Edited';
+        $query = "
+        SELECT * FROM user
+        WHERE username = '" . $_SESSION["admin_id"] . "'
+        ";
+        $result = $conn->query($query);
     }
 }
 
@@ -101,7 +106,22 @@
 
             foreach ($result as $row) {
                 ?>
-
+                
+                <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="admin_username" id="admin_username" class="form-control"
+                            value="<?php echo $row['username']; ?>" readonly />
+                </div>
+                <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="admin_name" id="admin_name" class="form-control"
+                            value="<?php echo $row['firstName']; ?>" readonly />
+                </div>
+                <div class="mb-3">
+                        <label class="form-label">Surname</label>
+                        <input type="text" name="admin_surname" id="admin_surname" class="form-control"
+                            value="<?php echo $row['lastName']; ?>" readonly />
+                </div>
                 <form method="post">
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
