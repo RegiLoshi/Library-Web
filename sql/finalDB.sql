@@ -62,8 +62,8 @@ CREATE TABLE borrows
   BookId INT NOT NULL,
   UserId INT NOT NULL,
   PRIMARY KEY (BookId, UserId),
-  FOREIGN KEY (BookId) REFERENCES Book(BookId),
-  FOREIGN KEY (UserId) REFERENCES User(UserId)
+  FOREIGN KEY (BookId) REFERENCES Book(BookId) on delete cascade,
+  FOREIGN KEY (UserId) REFERENCES User(UserId) on delete cascade
 );
 
 CREATE TABLE belongsTo
@@ -131,6 +131,7 @@ select * from book;
 select * from bookCategory;
 select * from user;
 select * from borrows;
+
 
 
 
