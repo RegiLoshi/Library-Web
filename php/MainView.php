@@ -71,7 +71,7 @@ session_start();
 
         $sql = "SELECT
                     Book.*,
-                    BookCategory.Category AS CategoryName,
+                    BookCategory.name AS CategoryName,
                     CONCAT(Author.firstName, ' ', Author.lastName) AS AuthorName
                 FROM
                     Book
@@ -84,7 +84,7 @@ session_start();
                 JOIN
                     Author ON hasWritten.authorId = Author.authorId
                 WHERE
-                    Book.name LIKE '%$search%'
+                    Book.title LIKE '%$search%'
                 LIMIT $offset, $booksPerPage";
 
 
@@ -94,7 +94,7 @@ session_start();
           $cnt = 1;
           while($row = $result->fetch_assoc()) {
             $isbn = $row["ISBN"];
-            $book_name = $row["name"];
+            $book_name = $row["title"];
             $description = $row["description"];
             $image = $row["bookURL"];
             $category = $row["CategoryName"];
