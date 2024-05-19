@@ -19,6 +19,7 @@ if(is_admin_login() == false)
         <a class="nav-link text-light" href="#">Author</a>
         <a class="nav-link text-light" href="#">Book</a>
         <a class="nav-link text-light" href="#">User</a>
+        <a class="nav-link text-light" href="#">Settings</a>
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
 

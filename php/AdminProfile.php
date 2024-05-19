@@ -33,6 +33,10 @@ if (isset($_POST['edit_admin'])) {
 
     if ($error == '') {
         $admin_id = $_SESSION['admin_id'];
+        
+        $salt = 'WebDevLibrary12345$()';
+        $salted = $formdata['admin_password'].$salt;
+		$formdata['admin_password'] = md5($salted);
 
         $data = array(
             ':admin_email' => $formdata['admin_email'],
@@ -63,11 +67,12 @@ if (isset($_POST['edit_admin'])) {
 <div class="d-flex">
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
         <h4 class="text-center text-light">Admin Panel</h4>
-        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a>
+        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a> 
         <a class="nav-link text-light" href="category.php">Category</a>
         <a class="nav-link text-light" href="#">Author</a>
         <a class="nav-link text-light" href="#">Book</a>
         <a class="nav-link text-light" href="#">User</a>
+        <a class="nav-link text-light" href="#">Settings</a>
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
 
@@ -76,6 +81,17 @@ if (isset($_POST['edit_admin'])) {
             <i class="fas fa-user-edit"></i> Edit Profile Details
         </div>
         <div class="card-body">
+            <?php
+
+            if ($error != '') {
+                echo '<div class="alert alert-danger alert-dismissible fade show d-flex" role="alert"><ul class="list-unstyled">' . $error . '</ul></div>';
+            }
+
+            if ($message != '') {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">' . $message . '</div>';
+            }
+
+            ?>
 
             <?php
 
@@ -98,7 +114,7 @@ if (isset($_POST['edit_admin'])) {
                     </div>
                 </form>
 
-            <?php
+                <?php
             }
 
             ?>
