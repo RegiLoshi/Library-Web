@@ -1,8 +1,21 @@
 <?php
-    include 'dbConnection.php';
-    include 'header.php';
+    require_once('dbConnection.php');
+    require_once('header.php');
+
+    // Check if a session already exists
+    session_start();
+    if(isset($_SESSION['admin_id'])) {
+        header('location:AdminView.php');
+        exit(); 
+    }
+
+    if(isset($_SESSION['user_id'])){
+        header('location:MainnView.php');
+        exit();
+    }
 
     $message = '';
+
     if(isset($_POST['login_button']))
     {
         $formdata = array();
@@ -18,7 +31,7 @@
 		        }
 		    else
 		    {
-			    $formdata['admin_email'] = $_POST['admin_email'];
+			    $formdata['admin_email'] = trim($_POST['admin_email']);
 		    }
             
         }
@@ -29,7 +42,9 @@
 	        }
 	    else
 	        {
-		        $formdata['admin_password'] = $_POST['admin_password'];
+                $salt = 'WebDevLibrary12345$()';
+                $salted = trim($_POST['admin_password']).$salt;
+		        $formdata['admin_password'] = md5($salted);
 	        }
 
 

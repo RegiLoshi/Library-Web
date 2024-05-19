@@ -5,26 +5,18 @@
 4) VIEW DETAILS AJAX REQUEST TO BE FINISHED WHEN VIEWDETAILS PAGE IS FINISHED
 -->
 <!-- GET ALL BOOKS -->
-<?php
-include 'header.php';
-?>
-
 <html>
 <head>
         <title>Library</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/mainview.css">
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
         <!-- BOOSTRAP -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        
     </head>
 
 <body>
@@ -38,7 +30,7 @@ include 'header.php';
       <a href="">User</a>
     </li>
     <li>
-      <a href="#" id="signOut">Sign Out</a>
+      <a href="logout.php" id="signOut">Sign Out</a>
     </li>
   </ul>
   </nav>
@@ -108,16 +100,14 @@ include 'header.php';
         <div class="card">
           <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
             <img src="<?php echo $image; ?>" class="w-100" style="max-width: 100%; max-height: 500px;" />
-            <a href="#">
               <div class="mask">
                 <div class="d-flex justify-content-start align-items-end h-100">
-                  <h5><span class="badge bg-primary ms-2">New</span></h5>
+                <span class="badge rounded-pill bg-primary" style="color: white;">New</span>
                 </div>
               </div>
               <div class="hover-overlay">
                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
               </div>
-            </a>
           </div>
           <div class="card-body">
             <p>#<?php echo $isbn; ?></p>
@@ -128,10 +118,10 @@ include 'header.php';
               <p>Category: <?php echo $category; ?></p>
             </a>
             <h6 class="mb-3">Written by: <?php echo $author_name; ?></h6>
-            <button class="viewDetails" data-id="<?php echo $isbn; ?>">View Details</button>
-          </div>
-        </div>
-      </div>
+            <button class="viewDetails btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-isbn="<?php echo $isbn; ?>">View Details</button>
+                </div>
+              </div>
+            </div>
       <?php
           }
         }
@@ -139,6 +129,23 @@ include 'header.php';
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Book Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Pagination -->
 <div class="pagination">
@@ -156,24 +163,31 @@ include 'header.php';
   ?>
 </div>
 
+
+<footer class="pt-3 mt-4 text-muted text-center border-top">
+                &copy; <?php echo date('Y') ?>
+            </footer>
+
 </body>
 </html>
 
 <script>
-  // TO-DO, VIEWDETAILS WILL REDIRECT TO NEW PAGE, LOGIC : GETS ISBN AS AJAX REQUEST
-  //AND THEN USES THAT TO FETCH INFO ON DETAILS PAGE
- $(".viewDetails").click(function(){
-    var isbn = $(this).data("id");
-    //var email = "<?php // echo $email; ?>"; should be added after login and sessions
+$(document).ready(function(){
+    $('.viewDetails').click(function(){
+        var isbn = $(this).data('isbn');
         $.ajax({
-            type: "POST",
-            url: "", //url of view details file
-            data: { isbnPHP: isbn }
+            type: 'POST',
+            url: 'get_book_details.php',
+            data: { isbn: isbn },
+            success: function(response) {
+                $('#modal-body').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
+    });
 });
-    </script>
 </script>
 
-<?php
-include 'footer.php';
-?>
+

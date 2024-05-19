@@ -38,12 +38,27 @@ CREATE TABLE Author
   PRIMARY KEY (authorId)
 );
 
+<<<<<<< HEAD
 CREATE TABLE BookCategory
 (
   Quantity INT NOT NULL,
   name VARCHAR(100) NOT NULL,
   BookCategoryId INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (BookCategoryId)
+=======
+CREATE TABLE Personnel (
+  PersonnelId INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  gender ENUM('Male', 'Female') NOT NULL,
+  firstName VARCHAR(100) NOT NULL,
+  lastName VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  Role ENUM('Admin', 'Librarian') NOT NULL,
+  PRIMARY KEY (PersonnelId),
+  UNIQUE (username),
+  UNIQUE (email)
+>>>>>>> eac0b46ad21361ffcead45ee8e15b9f6be3e1668
 );
 
 CREATE TABLE hasWritten
@@ -66,6 +81,7 @@ CREATE TABLE borrows
   FOREIGN KEY (UserId) REFERENCES User(UserId)
 );
 
+<<<<<<< HEAD
 CREATE TABLE belongsTo
 (
   BookId INT NOT NULL,
@@ -81,6 +97,21 @@ INSERT INTO User (firstName, lastName, email, username, password, gender, Role) 
 ('Alice', 'Johnson', 'alice.johnson@example.com', 'alicej', 'password3', 'F', 'user'),
 ('Bob', 'Brown', 'bob.brown@example.com', 'bobb', 'password4', 'M', 'user'),
 ('Carol', 'White', 'carol.white@example.com', 'carolw', 'password5', 'F', 'user');
+=======
+-- Insert GeneralUser data
+INSERT INTO GeneralUser (firstName, lastName, email, username, password, gender) VALUES
+('John', 'Doe', 'john.doe@example.com', 'johndoe', '9e301c6087cac6016393b1ace4fa8965', 'Male'),
+('Charlie', 'Brown', 'charlie.brown@example.com', 'charlieb', 'c020efea82ade269335dcd48ff8226f2', 'Male'),
+('Dana', 'White', 'dana.white@example.com', 'danawhite', 'a6640f907f5b1434e0fe3e7b3478de0f', 'Female'),
+('Alice', 'Johnson', 'alice.johnson@example.com', 'alicejohnson', '00d3e7625c14669fc8f6368323531ac8', 'Female'),
+('Bob', 'Williams', 'bob.williams@example.com', 'bobwilliams', '81839aaf7cbf9c84cb36d0d008c605a5', 'Male');
+
+-- Insert Personnel data
+INSERT INTO Personnel (username, email, gender, firstName, lastName, password, Role) VALUES
+('librarian3', 'librarian3@example.com', 'Female', 'Emma', 'Wilson', '2972afd75f5b8c27d96180aadea7d7a9', 'Librarian'),
+('admin2', 'admin2@example.com', 'Male', 'Ethan', 'Thomas', '6220e31d94291328aee391ce2bf54338', 'Admin'),
+('admin', 'admin@example.com', 'Female', 'Admin', 'User', '949af44980f54ae908b97bdf53ed507a', 'Admin');
+>>>>>>> eac0b46ad21361ffcead45ee8e15b9f6be3e1668
 
 INSERT INTO Book (ISBN, title, description, bookURL, supplierName, Quantity) VALUES
 ('9781234567890', 'Book One', 'Description for Book One', 'http://example.com/book1', 'Supplier One', 10),

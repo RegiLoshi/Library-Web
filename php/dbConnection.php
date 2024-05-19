@@ -7,6 +7,11 @@ $uName = "root";
 # password
 $pass = "";
 
+// #klaudia's 
+// $sName = "localhost:3310";
+// $uName = "root";
+// $pass = "";
+
 # database name
 $db_name = "library";
 
