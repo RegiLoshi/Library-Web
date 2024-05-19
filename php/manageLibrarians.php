@@ -10,8 +10,6 @@ if (is_admin_login() == false) {
     exit();
 }
 
-$message = '';
-
 $query = "
     SELECT * FROM user
     WHERE Role='librarian'
@@ -44,11 +42,6 @@ $statement->execute();
             </div>
         </div>
         <div class="card-body">
-            <?php
-            if ($message != '') {
-                echo '<div class="alert alert-info">' . $message . '</div>';
-            }
-            ?>
             <table id="datatablesSimple">
                 <thead>
                     <tr>
