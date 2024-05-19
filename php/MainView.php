@@ -2,6 +2,7 @@
 1) SESSIONS
 2) AFTER WELCOME H1 TAG TO BE ADDED DYNAMIC USER USERNAME (SESSION HAS TO BEEN DONE)
 3) LOG OUT IN NAV BAR TO DIRECT TO SIGN OUT PAGE AND DESTROY SESSION
+4) VIEW DETAILS AJAX REQUEST TO BE FINISHED WHEN VIEWDETAILS PAGE IS FINISHED
 -->
 <!-- GET ALL BOOKS -->
 <?php
@@ -127,7 +128,7 @@ include 'header.php';
               <p>Category: <?php echo $category; ?></p>
             </a>
             <h6 class="mb-3">Written by: <?php echo $author_name; ?></h6>
-            <button class="addToLibrary" data-id="<?php echo $isbn; ?>">View Details</button>
+            <button class="viewDetails" data-id="<?php echo $isbn; ?>">View Details</button>
           </div>
         </div>
       </div>
@@ -157,6 +158,21 @@ include 'header.php';
 
 </body>
 </html>
+
+<script>
+  // TO-DO, VIEWDETAILS WILL REDIRECT TO NEW PAGE, LOGIC : GETS ISBN AS AJAX REQUEST
+  //AND THEN USES THAT TO FETCH INFO ON DETAILS PAGE
+ $(".viewDetails").click(function(){
+    var isbn = $(this).data("id");
+    //var email = "<?php // echo $email; ?>"; should be added after login and sessions
+        $.ajax({
+            type: "POST",
+            url: "", //url of view details file
+            data: { isbnPHP: isbn }
+        });
+});
+    </script>
+</script>
 
 <?php
 include 'footer.php';
