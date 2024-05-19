@@ -1,11 +1,6 @@
 <?php
     include 'header.php';
 ?>
-
-
-
-
-
     <div class="container">
     <h1 class="text-center mt-5">Welcome to Our Portal</h1>
     <a href="adminLogin.php" class="btn btn-outline-info ml-auto" >Admin Login</a>
@@ -24,11 +19,10 @@
                     <input type="password" class="form-control" id="userPassword" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-                <button type="button" class="btn btn-secondary btn-block">Signup</button>
+                <a href="userSignUp.php" class="btn btn-secondary btn-block">Signup</a>
             </form>
         </div>
     </div>
-
 
 <?php
     include 'footer.php'
