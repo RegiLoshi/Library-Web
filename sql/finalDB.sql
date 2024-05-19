@@ -104,7 +104,7 @@ INSERT INTO Author (firstName, lastName)
 VALUES ('Jane','Smith');
 
 INSERT INTO Personnel (username, email, gender, firstName, lastName, password, Role)
-VALUES ('admin', 'admin@example.com', 'Female', 'Admin', 'User', 'admin123', 'Admin');
+VALUES ('admin', 'admin@example.com', 'Female', 'Admin', 'User', '949af44980f54ae908b97bdf53ed507a', 'Admin');
 
 INSERT INTO belongsTo (BookCategoryId, BookId)
 VALUES (1, 1);
