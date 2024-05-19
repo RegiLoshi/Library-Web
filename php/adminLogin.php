@@ -29,7 +29,10 @@
 	        }
 	    else
 	        {
-		        $formdata['admin_password'] = $_POST['admin_password'];
+
+                $salt = 'WebDevLibrary12345$()';
+                $salted = $_POST['admin_password'].$salt;
+		        $formdata['admin_password'] = md5($salted);
 	        }
 
 

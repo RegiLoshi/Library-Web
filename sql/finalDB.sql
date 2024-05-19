@@ -94,9 +94,9 @@ INSERT INTO GeneralUser (firstName, lastName, email, username, password, gender)
 
 -- Insert Personnel data
 INSERT INTO Personnel (username, email, gender, firstName, lastName, password, Role) VALUES
-('librarian3', 'librarian3@example.com', 'Female', 'Emma', 'Wilson', 'lib12345', 'Librarian'),
-('admin2', 'admin2@example.com', 'Male', 'Ethan', 'Thomas', 'admin1234', 'Admin'),
-('admin', 'admin@example.com', 'Female', 'Admin', 'User', 'admin123', 'Admin');
+('librarian3', 'librarian3@example.com', 'Female', 'Emma', 'Wilson', '2972afd75f5b8c27d96180aadea7d7a9', 'Librarian'),
+('admin2', 'admin2@example.com', 'Male', 'Ethan', 'Thomas', '6220e31d94291328aee391ce2bf54338', 'Admin'),
+('admin', 'admin@example.com', 'Female', 'Admin', 'User', '949af44980f54ae908b97bdf53ed507a', 'Admin');
 
 -- Insert BookCategory data
 INSERT INTO BookCategory (Category, Quantity) VALUES
