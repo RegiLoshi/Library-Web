@@ -72,8 +72,8 @@ $statement->execute();
                                 <td>' . $row["lastName"] . '</td>
                                 <td>' . $row["email"] . '</td>
                                 <td>
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="id" value="' . $row["username"] . '">
+                                    <form method="POST" action="modifyLibrarian.php">
+                                        <input type="hidden" name="username" value="' . $row["username"] . '">
                                         <button type="submit" name="modify_button" class="btn btn-danger btn-sm">Modify</button>
                                     </form>
                                 </td>
