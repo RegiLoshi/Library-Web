@@ -1,7 +1,3 @@
-<!-- TO-DO
-3) LOG OUT IN NAV BAR TO DIRECT TO SIGN OUT PAGE AND DESTROY SESSION
-4) VIEW DETAILS AJAX REQUEST TO BE FINISHED WHEN VIEWDETAILS PAGE IS FINISHED
--->
 <!-- GET ALL BOOKS -->
 <?php
 session_start();
@@ -11,7 +7,7 @@ session_start();
 </script>
 <html>
 <head>
-        <title>Library</title>
+        <title>Library Management System</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -31,7 +27,7 @@ session_start();
       <a href="MainView.php">Home</a>
     </li>
     <li>
-      <a href="" id = "userProfile">User</a>
+      <a href="userProfile.php" id = "userProfile">User</a>
     </li>
     <li>
       <a href="logout.php" id="signOut">Sign Out</a>
