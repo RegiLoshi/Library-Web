@@ -86,7 +86,8 @@
         }    
     }
 ?>
-<div class="d-flex align-items-center justify-content-center" style="min-height:700px;">
+<a href="index.php" class="btn btn-outline-info ml-auto"  >User Login</a>
+<div class="d-flex align-items-center justify-content-center" style="min-height:700px; margin-top: -100px;">
     <div class="col-md-6">
 
         <?php 
@@ -115,3 +116,6 @@
         </div>
     </div>
 </div>
+<?php
+require_once("footer.php");
+?>
