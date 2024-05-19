@@ -140,7 +140,7 @@ if (isset($_POST["register_button"])) {
         <div class="card">
             <div class="card-header">New User Registration</div>
             <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST">
                     <div class="mb-3">
                         <label class="form-label">Name</label>
                         <input type="text" name="user_name" class="form-control" id="user_name" value="<?php echo isset($_POST['user_name']) ? htmlspecialchars($_POST['user_name']) : ''; ?>" />
