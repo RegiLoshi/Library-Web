@@ -38,7 +38,7 @@ include 'header.php';
       <a href="">User</a>
     </li>
     <li>
-      <a href="#" id="signOut">Sign Out</a>
+      <a href="logout.php" id="signOut">Sign Out</a>
     </li>
   </ul>
   </nav>
