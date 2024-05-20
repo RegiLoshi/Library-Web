@@ -10,9 +10,8 @@ if(!isset($_SESSION['admin_id'])) {
 }
 
 $query = "
-    SELECT * FROM user
-    WHERE Role='librarian'
-    ORDER BY username ASC
+    SELECT * FROM book
+    ORDER BY title ASC
     ";
 
 $statement = $conn->prepare($query);
@@ -34,10 +33,10 @@ $statement->execute();
         <div class="card-header">
             <div class="row">
                 <div class="col col-md-6">
-                    <i class="fas fa-table me-1"></i> Librarians Management
+                    <i class="fas fa-table me-1"></i> Books Management
                 </div>
                 <div class="col col-md-6" align="right">
-                <a href="newLibrarians.php" class="btn btn-success btn-sm">Add</a>
+                <a href="newBooks.php" class="btn btn-success btn-sm">Add</a>
                 </div>
             </div>
         </div>
@@ -45,19 +44,17 @@ $statement->execute();
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>Username</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Email</th>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Quantity</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Username</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Email</th>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Quantity</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -67,13 +64,12 @@ $statement->execute();
                         foreach ($statement->fetchAll() as $row) {
                             echo '
                             <tr>
-                                <td>' . $row["username"] . '</td>
-                                <td>' . $row["firstName"] . '</td>
-                                <td>' . $row["lastName"] . '</td>
-                                <td>' . $row["email"] . '</td>
+                                <td>' . $row["ISBN"] . '</td>
+                                <td>' . $row["title"] . '</td>
+                                <td>' . $row["Quantity"] . '</td>
                                 <td>
-                                    <form method="POST" action="modifyLibrarian.php">
-                                        <input type="hidden" name="username" value="' . $row["username"] . '">
+                                    <form method="POST" action="modifyBook.php">
+                                        <input type="hidden" name="ISBN" value="' . $row["ISBN"] . '">
                                         <button type="submit" name="modify_button" class="btn btn-danger btn-sm">Modify</button>
                                     </form>
                                 </td>
