@@ -67,7 +67,7 @@ session_start();
 
         $sql = "SELECT
                     Book.*,
-                    BookCategory.name AS CategoryName,
+                    BookCategory.Category AS CategoryName,
                     CONCAT(Author.firstName, ' ', Author.lastName) AS AuthorName
                 FROM
                     Book
@@ -213,10 +213,18 @@ $(document).ready(function(){
             url: 'lendBook.php',
             data: { isbn: isbn},
             success: function(response) {
-                alert(response);
+                // Parse the JSON response
+                if (response.status === 'error') {
+                    alert(response.message);
+                } else if (response.status === 'success') {
+                    alert(response.message);
+                } else {
+                    alert('Unexpected response from server');
+                }
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
+                alert('An error occurred while processing your request.');
             }
         });
     });
