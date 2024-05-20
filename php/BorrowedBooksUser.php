@@ -24,12 +24,8 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<html>
-<head>
-    <title>Borrowed Books</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-</head>
-<body>
+
+
 <div class="d-flex" id="navbar">
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
         <h4 class="text-center text-light">User Panel</h4>
@@ -39,7 +35,7 @@ if ($result->num_rows > 0) {
     </nav>
 
     <!-- Borrowed Books -->
-    <section style="background-color: #eee;">
+    <section style="background-color: #eee; width:800px;">
         <div class="text-center container py-5">
             <h4 class="mt-4 mb-5"><strong>Your Borrowed Books</strong></h4>
             <div class="row">
@@ -119,10 +115,10 @@ if ($result->num_rows > 0) {
         </div>
     </section>
 </div>
-</body>
-</html>
+
 
 <?php
 $statement->close();
 $conn->close();
+require_once('footer.php');
 ?>
