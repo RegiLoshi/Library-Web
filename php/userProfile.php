@@ -1,5 +1,4 @@
 <?php
-include 'CheckAdminLogin.php';
 include 'header.php';
 require("config.php");
 session_start();
