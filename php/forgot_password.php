@@ -56,6 +56,7 @@ if (isset($_POST['reset_password'])) {
         echo '<div class="alert alert-info">' . $message . '</div>';
     }
     ?>
+    <a href="index.php">Go Back</a>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <form method="POST">
