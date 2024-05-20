@@ -40,6 +40,7 @@ $conn->close();
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
         <h4 class="text-center text-light">User Panel</h4>
         <a class="nav-link text-light" href="MainView.php">Homepage</a>
+        <a class="nav-link text-light" href="BorrowedBooksUser.php" >Borrowed Books</a>
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
 
