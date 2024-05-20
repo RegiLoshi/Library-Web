@@ -5,11 +5,10 @@ require_once('CheckAdminLogin.php');
 
 session_start();
 
-if(!isset($_SESSION['librarian_id'])){
+if (is_admin_login() == false) {
     header('location:StaffLogin.php');
     exit();
 }
-
 
 $query = "SELECT * FROM borrows";
 $statement = $conn->prepare($query);
@@ -115,11 +114,16 @@ if (isset($_POST['modify_button'])) {
 
 <div class="d-flex">
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
-        <h4 class="text-center text-light">Librarian Panel</h4>
-        <a class="nav-link text-light active" href="librarianProfile.php">Profile</a> 
-        <a class="nav-link text-light" href="manageBookRequests.php">Book requests</a>
+        <h4 class="text-center text-light">Admin Panel</h4>
+        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a>
+        <a class="nav-link text-light" href="category.php">Category</a>
+        <a class="nav-link text-light" href="#">Author</a>
+        <a class="nav-link text-light" href="#">Book</a>
+        <a class="nav-link text-light" href="adminBookRequests.php">Requests</a>
+        <a class="nav-link text-light" href="manageLibrarians.php">Librarian</a>
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
+
     <div class="card mb-4" style="width: 800px;">
         <div class="card-header">
             <div class="row">
