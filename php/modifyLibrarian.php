@@ -86,9 +86,9 @@ if (isset($_POST['edit_librarian'])) {
 <div class="d-flex">
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
         <h4 class="text-center text-light">Admin Panel</h4>
-        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a> 
+        <a class="nav-link text-light active" href="AdminProfile.php">Profile</a>
         <a class="nav-link text-light" href="category.php">Category</a>
-        <a class="nav-link text-light" href="#">Author</a>
+        <a class="nav-link text-light" href="adminAuthorManage.php">Author</a>
         <a class="nav-link text-light" href="#">Book</a>
         <a class="nav-link text-light" href="adminBookRequests.php">Requests</a>
         <a class="nav-link text-light" href="manageLibrarians.php">Librarian</a>

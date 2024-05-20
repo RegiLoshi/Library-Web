@@ -13,12 +13,12 @@ $message = '';
 
 if (isset($_POST['delete_button'])) {
     $id = $_POST['id'];
-    $query = "DELETE FROM bookcategory WHERE BookCategoryId = :id";
+    $query = "DELETE FROM author WHERE authorId = :id";
     $statement = $conn->prepare($query);
     if ($statement->execute([':id' => $id])) {
-        $message = 'Category deleted successfully.';
+        $message = 'Author deleted successfully.';
     } else {
-        $message = 'Failed to delete category.';
+        $message = 'Failed to delete author.';
     }
     echo '<script type="text/javascript">
                 alert("' . $message . '");
@@ -28,14 +28,14 @@ if (isset($_POST['delete_button'])) {
 }
 
 if (isset($_POST['add_button'])) {
-    $category = $_POST['category'];
-    $quantity = $_POST['quantity'];
-    $query = "INSERT INTO bookcategory (Category, Quantity) VALUES (:category, :quantity)";
+    $author_name = $_POST['author_name'];
+    $author_surname = $_POST['author_surname'];
+    $query = "INSERT INTO author (firstName, lastName) VALUES (:author_name, :author_surname)";
     $statement = $conn->prepare($query);
-    if ($statement->execute([':category' => $category, ':quantity' => $quantity])) {
-        $message = 'Category added successfully.';
+    if ($statement->execute([':author_name' => $author_name, ':author_surname' => $author_surname])) {
+        $message = 'Author added successfully.';
     } else {
-        $message = 'Failed to add category.';
+        $message = 'Failed to add auhtor.';
     }
     echo '<script type="text/javascript">
                 alert("' . $message . '");
@@ -45,8 +45,8 @@ if (isset($_POST['add_button'])) {
 }
 
 $query = "
-    SELECT * FROM bookcategory
-    ORDER BY Category ASC
+    SELECT * FROM author
+    ORDER BY firstName ASC
     ";
 
 $statement = $conn->prepare($query);
@@ -68,11 +68,11 @@ $statement->execute();
         <div class="card-header">
             <div class="row">
                 <div class="col col-md-6">
-                    <i class="fas fa-table me-1"></i> Category Management
+                    <i class="fas fa-table me-1"></i> Authors Management
                 </div>
                 <div class="col col-md-6" align="right">
                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                        data-target="#addCategoryModal">Add</button>
+                        data-target="#addAuthorModal">Add</button>
                 </div>
             </div>
         </div>
@@ -85,15 +85,15 @@ $statement->execute();
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>Category</th>
-                        <th>Quantity</th>
+                        <th>Name</th>
+                        <th>Surname</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Category</th>
-                        <th>Quantity</th>
+                        <th>Name</th>
+                        <th>Surname</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -103,11 +103,11 @@ $statement->execute();
                         foreach ($statement->fetchAll() as $row) {
                             echo '
                             <tr>
-                                <td>' . $row["Category"] . '</td>
-                                <td>' . $row["Quantity"] . '</td>
+                                <td>' . $row["firstName"] . '</td>
+                                <td>' . $row["lastName"] . '</td>
                                 <td>
                                     <form method="POST" action="">
-                                        <input type="hidden" name="id" value="' . $row["BookCategoryId"] . '">
+                                        <input type="hidden" name="id" value="' . $row["authorId"] . '">
                                         <button type="submit" name="delete_button" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </td>
@@ -127,30 +127,30 @@ $statement->execute();
         </div>
     </div>
 
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel"
+    <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" action="">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                        <h5 class="modal-title" id="addAuthorModalLabel">Add New Author</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="category">Category Name</label>
-                            <input type="text" class="form-control" id="category" name="category" required>
+                            <label for="author_name">Author Name</label>
+                            <input type="text" class="form-control" id="author_name" name="author_name" required>
                         </div>
                         <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                            <label for="author_surname">Author Surname</label>
+                            <input type="text" class="form-control" id="author_surname" name="author_surname" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="add_button" class="btn btn-primary">Add Category</button>
+                        <button type="submit" name="add_button" class="btn btn-primary">Add Author</button>
                     </div>
                 </form>
             </div>

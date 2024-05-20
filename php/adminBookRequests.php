@@ -116,7 +116,7 @@ if (isset($_POST['modify_button'])) {
         <h4 class="text-center text-light">Admin Panel</h4>
         <a class="nav-link text-light active" href="AdminProfile.php">Profile</a>
         <a class="nav-link text-light" href="category.php">Category</a>
-        <a class="nav-link text-light" href="#">Author</a>
+        <a class="nav-link text-light" href="adminAuthorManage.php">Author</a>
         <a class="nav-link text-light" href="#">Book</a>
         <a class="nav-link text-light" href="adminBookRequests.php">Requests</a>
         <a class="nav-link text-light" href="manageLibrarians.php">Librarian</a>
