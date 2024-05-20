@@ -31,7 +31,7 @@ if (isset($_POST['delete_button'])) {
 if (isset($_POST['add_button'])) {
     $category = $_POST['category'];
     $quantity = $_POST['quantity'];
-    $query = "INSERT INTO bookcategory (name, Quantity) VALUES (:category, :quantity)";
+    $query = "INSERT INTO bookcategory (Category, Quantity) VALUES (:category, :quantity)";
     $statement = $conn->prepare($query);
     if ($statement->execute([':category' => $category, ':quantity' => $quantity])) {
         $message = 'Category added successfully.';
@@ -47,7 +47,7 @@ if (isset($_POST['add_button'])) {
 
 $query = "
     SELECT * FROM bookcategory
-    ORDER BY name ASC
+    ORDER BY Category ASC
     ";
 
 $statement = $conn->prepare($query);
@@ -103,7 +103,7 @@ $statement->execute();
                         foreach ($statement->fetchAll() as $row) {
                             echo '
                             <tr>
-                                <td>' . $row["name"] . '</td>
+                                <td>' . $row["Category"] . '</td>
                                 <td>' . $row["Quantity"] . '</td>
                                 <td>
                                     <form method="POST" action="">

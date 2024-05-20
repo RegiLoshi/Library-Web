@@ -41,7 +41,7 @@ CREATE TABLE Author
 CREATE TABLE BookCategory
 (
   Quantity INT NOT NULL,
-  name VARCHAR(100) NOT NULL,
+  Category VARCHAR(100) NOT NULL,
   BookCategoryId INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (BookCategoryId)
 );
@@ -58,7 +58,7 @@ CREATE TABLE hasWritten
 CREATE TABLE borrows
 (
   BorrowedDate DATE NOT NULL,
-  Status enum('requested','borrowed','returned') NOT NULL,
+  Status enum('requested','borrowed','returned','overdue') NOT NULL,
   BookId INT NOT NULL,
   UserId INT NOT NULL,
   PRIMARY KEY (BookId, UserId),
@@ -76,18 +76,20 @@ CREATE TABLE belongsTo
 );
 
 INSERT INTO User (firstName, lastName, email, username, password, gender, Role) VALUES
-('John', 'Doe', 'john.doe@example.com', 'johndoe', '9e301c6087cac6016393b1ace4fa8965', 'Male', 'user'),
-('Jane', 'Smith', 'admin@example.com', 'janesmith', '949af44980f54ae908b97bdf53ed507a', 'Female', 'admin'),
-('Alice', 'Johnson', 'librarian@example.com', 'alicej', 'e6bd0dbeb2d0baee9c956b32bdf114ce', 'Female', 'librarian'),
-('Bob', 'Brown', 'bob.brown@example.com', 'bobb', '81839aaf7cbf9c84cb36d0d008c605a5', 'Male', 'user'),
-('Carol', 'White', 'carol.white@example.com', 'carolw', '37c350cfcc9a8c3c2c0fc31268f3e77e', 'Female', 'user');
+('John', 'Doe', 'john.doe@example.com', 'johndoe', '87efb81e8f01b77b0a8be67c5ec785c6', 'Male', 'user'), -- pass0
+('Jane', 'Smith', 'admin@example.com', 'janesmith', '949af44980f54ae908b97bdf53ed507a', 'Female', 'admin'), -- admin123
+('Alice', 'Johnson', 'alice.johnson@example.com', 'alicej', 'fafc3ce7730c9e58e77f801ac18466c9', 'Female', 'user'), -- pass1
+('Bob', 'Brown', 'bob.brown@example.com', 'bobb', '95ed523d77a5247545a5484c67f71577', 'Male', 'user'), -- pass3
+('Carol', 'White', 'carol.white@example.com', 'carolw', '7a8157ae2409c3c752b8b4ec5209c90c', 'Female', 'user'), -- pass4
+('Adam', 'Joe', 'adam.joe@example.com', 'adamjoe', 'b1469793c545629755baeec3cb40e56f', 'Male', 'librarian'), -- pass5
+('James', 'Bond', 'james.bond@example.com', 'jamesbond', 'f8766c850f2cd295d2b4bbb659723c82', 'Male', 'librarian'); -- pass6
 
 INSERT INTO Book (ISBN, title, description, bookURL, supplierName, Quantity) VALUES
-('9781234567890', 'Book One', 'Description for Book One', 'http://example.com/book1', 'Supplier One', 10),
-('9781234567891', 'Book Two', 'Description for Book Two', 'http://example.com/book2', 'Supplier Two', 5),
-('9781234567892', 'Book Three', 'Description for Book Three', 'http://example.com/book3', 'Supplier One', 7),
-('9781234567893', 'Book Four', 'Description for Book Four', 'http://example.com/book4', 'Supplier Three', 3),
-('9781234567894', 'Book Five', 'Description for Book Five', 'http://example.com/book5', 'Supplier Two', 12);
+('9781234567890', 'Book One', 'Description for Book One', 'https://m.media-amazon.com/images/I/71k--OLmZKL._AC_UF894,1000_QL80_.jpg', 'Supplier One', 10),
+('9781234567891', 'Book Two', 'Description for Book Two', 'https://www.pluggedin.com/wp-content/uploads/2020/01/hobbit-cover-670x1024.jpg', 'Supplier Two', 5),
+('9781234567892', 'Book Three', 'Description for Book Three', 'https://m.media-amazon.com/images/I/712cDO7d73L._AC_UF1000,1000_QL80_.jpg', 'Supplier One', 7),
+('9781234567893', 'Book Four', 'Description for Book Four', 'https://m.media-amazon.com/images/I/81q77Q39nEL._AC_UF894,1000_QL80_.jpg', 'Supplier Three', 3),
+('9781234567894', 'Book Five', 'Description for Book Five', 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1663805647i/136251.jpg', 'Supplier Two', 12);
 
 INSERT INTO Author (firstName, lastName) VALUES
 ('Mark', 'Twain'),
@@ -96,7 +98,7 @@ INSERT INTO Author (firstName, lastName) VALUES
 ('J.K.', 'Rowling'),
 ('Ernest', 'Hemingway');
 
-INSERT INTO BookCategory (Quantity, name) VALUES
+INSERT INTO BookCategory (Quantity, Category) VALUES
 (50, 'Fiction'),
 (30, 'Non-Fiction'),
 (20, 'Science'),
@@ -104,25 +106,25 @@ INSERT INTO BookCategory (Quantity, name) VALUES
 (10, 'Biography');
 
 INSERT INTO hasWritten (BookId, authorId) VALUES
-(1, 1), 
-(2, 2), 
-(3, 3), 
-(4, 4), 
-(5, 5); 
+(1, 1), -- Book One written by Mark Twain
+(2, 2), -- Book Two written by Jane Austen
+(3, 3), -- Book Three written by Charles Dickens
+(4, 4), -- Book Four written by J.K. Rowling
+(5, 5); -- Book Five written by Ernest Hemingway
 
 INSERT INTO borrows (BorrowedDate, Status, BookId, UserId) VALUES
-('2024-05-01', 'borrowed', 1, 1), 
-('2024-05-02', 'returned', 2, 2), 
-('2024-05-03', 'borrowed', 3, 3), 
-('2024-05-04', 'requested', 4, 4), 
-('2024-05-05', 'requested', 5, 5); 
+('2024-05-01', 'borrowed', 1, 1), -- John borrowed Book One
+('2024-05-02', 'returned', 2, 2), -- Jane returned Book Two
+('2024-05-03', 'borrowed', 3, 3), -- Alice borrowed Book Three
+('2024-05-04', 'overdue', 4, 4), -- Bob has overdue Book Four
+('2024-05-05', 'requested', 5, 5); -- Carol requested Book Five
 
 INSERT INTO belongsTo (BookId, BookCategoryId) VALUES
-(1, 1), 
-(2, 2), 
-(3, 3), 
-(4, 4), 
-(5, 5); 
+(1, 1), -- Book One belongs to Fiction
+(2, 2), -- Book Two belongs to Non-Fiction
+(3, 3), -- Book Three belongs to Science
+(4, 4), -- Book Four belongs to History
+(5, 5); -- Book Five belongs to Biography
 
 select * from author;
 select * from belongsTo;
@@ -132,6 +134,8 @@ select * from bookCategory;
 select * from user;
 select * from borrows;
 
+use library;
 
+-- drop database library;
 
 
