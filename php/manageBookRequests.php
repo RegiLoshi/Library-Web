@@ -1,7 +1,6 @@
 <?php
 require_once('header.php');
 require_once('dbConnection.php');
-require_once('CheckAdminLogin.php');
 
 session_start();
 

@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-include 'CheckAdminLogin.php';
 session_start();
 
 if(!isset($_SESSION['admin_id'])) {
