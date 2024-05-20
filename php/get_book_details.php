@@ -27,7 +27,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $book_name = $row["name"];
+    $book_name = $row["title"];
     $description = $row["description"];
     $image = $row["bookURL"];
     $category = $row["CategoryName"];
