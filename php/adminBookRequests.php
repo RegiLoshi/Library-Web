@@ -5,7 +5,7 @@ require_once('CheckAdminLogin.php');
 
 session_start();
 
-if (is_admin_login() == false) {
+if(!isset($_SESSION['admin_id'])) {
     header('location:StaffLogin.php');
     exit();
 }
