@@ -80,7 +80,7 @@
 				        }
 				    else
 				    {
-					$message = '<li>Wrong Password</li>';
+                        $message = '<li>Wrong Password <a href="forgot_password.php">Forgot Password?</a></li>';
 				    }
 			    }
 		    }	
