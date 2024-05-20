@@ -2,10 +2,17 @@
 require_once('header.php');
 require_once('dbConnection.php');
 
+
 $message = '';
 
 if (isset($_POST['reset_password'])) {
     $formdata = array();
+
+    if (empty($_POST["username"])) {
+        $message .= '<li>Username is Required</li>';
+    } else {
+        $formdata['username'] = trim($_POST['username']);
+    }
 
     if (empty($_POST["userEmail"])) {
         $message .= '<li>Email Address is Required</li>';
@@ -18,52 +25,28 @@ if (isset($_POST['reset_password'])) {
     }
 
     if ($message == '') {
-        $newPassword = generateRandomPassword(10); 
-
-        $salt = 'WebDevLibrary12345$()';
-        $salted = $newPassword . $salt;
-        $hashedPassword = md5($salted);
-
-        $query = "UPDATE user SET password = :password WHERE email = :email";
+        $query = "SELECT * FROM user WHERE username = :username AND email = :email";
         $statement = $conn->prepare($query);
-        $statement->execute([':password' => $hashedPassword, ':email' => $formdata['userEmail']]);
+        $statement->execute([':username' => $formdata['username'], ':email' => $formdata['userEmail']]);
 
-        // ---SENDING MAIL TO BE FIXED ----
-        ini_set('SMTP', 'smtp.gmail.com');
-        ini_set('smtp_port', 587);
-        ini_set('smtp_auth', 'true');
-        ini_set('smtp_secure', 'tls');
-        ini_set('smtp_username', '123gachagames123@gmail.com'); 
-        ini_set('smtp_password', 'LibraryPhpProject'); 
+        if ($statement->rowCount() > 0) {
+            $newPassword = $_POST['new_password']; 
 
-        $from = '123gachagames123@gmail.com'; 
-        $to = $formdata['userEmail'];
-        $headers = 'From: ' . $from . "\r\n";
-        $headers .= 'Reply-To: ' . $from . "\r\n";
-        $subject = 'Reset password';
-        $messageBody = 'Your new password is: ' . $newPassword; 
+            $salt = 'WebDevLibrary12345$()';
+            $salted = $newPassword . $salt;
+            $hashedPassword = md5($salted);
 
-        $mailSent = mail($to, $subject, $messageBody, $headers);
-        
-        if ($mailSent) {
-            $message = 'Password reset successful. Check your email for the new password.';
+            $updateQuery = "UPDATE user SET password = :password WHERE username = :username AND email = :email";
+            $updateStatement = $conn->prepare($updateQuery);
+            $updateStatement->execute([':password' => $hashedPassword, ':username' => $formdata['username'], ':email' => $formdata['userEmail']]);
+
+            $message = 'Your password has been reseted successfully.';
         } else {
-            $message = 'Failed to send email. Please try again later.';
+            $message = 'Cannot reset password if username and email are not confirmed.';
         }
-
-        //----------------------------------------------
     }
 }
 
-// Function to generate a random password
-function generateRandomPassword($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $password = '';
-    for ($i = 0; $i < $length; $i++) {
-        $password .= $characters[rand(0, strlen($characters) - 1)];
-    }
-    return $password;
-}
 ?>
 
 <div class="container">
@@ -77,8 +60,16 @@ function generateRandomPassword($length = 10) {
         <div class="col-md-6">
             <form method="POST">
                 <div class="form-group">
+                    <label for="username">Enter your Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
                     <label for="userEmail">Enter your Email Address</label>
                     <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="new_password">Enter new password</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter username">
                 </div>
                 <button type="submit" name="reset_password" class="btn btn-primary btn-block">Reset Password</button>
                 <a href="index.php" class="btn btn-primary btn-block">Login</a></br>
