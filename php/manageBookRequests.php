@@ -62,13 +62,12 @@ $statement->execute();
                     } elseif ($row["Status"] == "returned") {
                         $button_text = 'Remove';
                         $button_class = 'btn btn-success btn-sm';
-                    }elseif ($row["Status"] == "overdue") {
+                    } elseif ($row["Status"] == "overdue") {
                         $button_text = 'Contact';
                         $button_class = 'btn btn-danger btn-sm';
-                    }elseif ($row["Status"] == "borrowed") {
+                    } elseif ($row["Status"] == "borrowed") {
                         $button_text = 'Returned?';
                         $button_class = 'btn btn-warning btn-sm';
-                        $button_style = 'style="background-color: #99ccff'; 
                     }
                     echo '
                     <tr>
