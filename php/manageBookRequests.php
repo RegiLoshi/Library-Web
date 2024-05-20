@@ -116,6 +116,7 @@ if (isset($_POST['modify_button'])) {
     <nav class="nav flex-column bg-dark vh-100 p-3" style="width: 250px;">
         <h4 class="text-center text-light">Librarian Panel</h4>
         <a class="nav-link text-light active" href="librarianProfile.php">Profile</a> 
+        <a class="nav-link text-light" href="librarianBookView.php">View Books</a>
         <a class="nav-link text-light" href="manageBookRequests.php">Book requests</a>
         <a class="nav-link text-light" href="logout.php">Logout</a>
     </nav>
