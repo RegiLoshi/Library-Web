@@ -1,10 +1,9 @@
 <?php
-// handleAction.php
+
 session_start();
-// Check if the form is submitted and the necessary data is provided
-// Perform the database query based on the button clicked
+
 require_once('dbConnection.php');
-require_once('config.php'); // Include your database connection script here
+require_once('config.php'); 
 var_dump($_POST);
 
 if(isset($_POST['user_id']) && isset($_POST['book_id']) && isset($_POST['status'])) {
