@@ -65,7 +65,37 @@ if (isset($_POST['delete'])) {
 }
 
 if (isset($_POST['edit_book'])) {
-    // Add edit book logic here
+    $description = $_POST['description'];
+    $url = $_POST['book_url'];
+    $supplier = $_POST['book_supplier'];
+    $quantity = $_POST['book_quantity'];
+
+    if ($description == '' || $url == '' || $supplier == '' || $quantity == '') {
+        $error = 'All fields are required.';
+    } else {
+        $updateQuery = "
+            UPDATE book 
+            SET description = :description, bookURL = :bookURL, supplierName = :supplierName, Quantity = :quantity
+            WHERE ISBN = :ISBN
+        ";
+        $updateStatement = $conn->prepare($updateQuery);
+        $updateParams = [
+            ':description' => $description,
+            ':bookURL' => $url,
+            ':supplierName' => $supplier,
+            ':quantity' => $quantity,
+            ':ISBN' => $ISBN
+        ];
+
+        if ($updateStatement->execute($updateParams)) {
+            $message = 'Book details updated successfully.';
+            // Refresh the page to fetch updated details
+            header("Location: ".$_SERVER['PHP_SELF']."?ISBN=".$ISBN);
+            exit();
+        } else {
+            $error = 'Failed to update book details.';
+        }
+    }
 }
 ?>
 <div class="d-flex">
@@ -97,19 +127,22 @@ if (isset($_POST['edit_book'])) {
 
             <?php if ($book): ?>
                 <form method="post">
-                    <div class="d-flex">
+                    <div class="mb-3">
+                        <label class="form-label">ISBN</label>
+                        <input type="text" name="book_ISBN" id="book_ISBN" class="form-control" 
+                            value="<?= htmlspecialchars($book['ISBN']); ?>" readonly />
+                    </div>
+                    <div class="d-flex mb-3">
                         <div class="mb-2">
                             <label class="form-label">Book Title</label>
                             <input type="text" name="book_title" id="book_title" class="form-control" style="width:600px"
-                                value="<?= htmlspecialchars($book['title']); ?>" />
+                                value="<?= htmlspecialchars($book['title']); ?>" readonly />
                         </div>
                         <img src="<?= htmlspecialchars($book['bookURL']); ?>" alt="" style="height:70px; width:50px; margin-left:100px;">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Book Description</label>
-                        <textarea name="description" id="book_description" class="form-control" style="height:120px;">
-                            <?= htmlspecialchars($book['description']); ?>
-                        </textarea>
+                        <textarea name="description" id="book_description" class="form-control" style="height:120px;"><?= htmlspecialchars($book['description']); ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Book URL</label>
@@ -125,11 +158,6 @@ if (isset($_POST['edit_book'])) {
                         <label class="form-label">Book Quantity</label>
                         <input type="number" name="book_quantity" id="book_quantity" class="form-control" 
                             value="<?= htmlspecialchars($book['Quantity']); ?>" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">ISBN</label>
-                        <input type="text" name="book_ISBN" id="book_ISBN" class="form-control" 
-                            value="<?= htmlspecialchars($book['ISBN']); ?>" readonly />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Authors:</label>
