@@ -50,7 +50,6 @@ $username = $_SESSION['librarian_id'];
                     <div class="col-md-1">Quantity</div>
                     <div class="col-md-2">Category</div>
                     <div class="col-md-2">Author</div>
-                    <div class="col-md-1">Actions</div>
                 </div>
                 <?php
                 // Number of books per page
@@ -105,10 +104,6 @@ $username = $_SESSION['librarian_id'];
                             <div class="col-md-1"><?php echo $quantity; ?></div>
                             <div class="col-md-2"><?php echo $category; ?></div>
                             <div class="col-md-2"><?php echo $author_name; ?></div>
-                            <div class="col-md-1">
-                                <button class="btn btn-info editBook" data-isbn="<?php echo $isbn; ?>">Edit Book</button>
-                                <button class="btn btn-danger deleteBook" data-isbn="<?php echo $isbn; ?>">Delete Book</button>
-                            </div>
                         </div>
                         <?php
                     }
