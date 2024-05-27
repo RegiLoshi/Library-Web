@@ -60,10 +60,11 @@
 
             $query = "
             SELECT * FROM user
-            WHERE email = :userEmail
+            WHERE email = ?
             ";
             $statement = $conn->prepare($query);
-            $statement->execute($data);
+            $statement->execute();
+
 
             if($statement->rowCount() > 0)
 		        {
@@ -73,7 +74,6 @@
 				        {
                             session_start();
 					        $_SESSION['user_id'] = $row['username'];
-                            echo $_SESSION['user_id'];
                     
 					        header('location:userProfile.php');
                             exit();
