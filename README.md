@@ -24,3 +24,7 @@ This project was done for the Web Development course. It uses HTML CSS and JS fo
 -Manage user book requests<br>
 -Security Feature<br>
 -Hashing and salting<br>
+
+# Screenshots
+<img src="https://github.com/RegiLoshi/Library-Web/blob/main/ScreenShots/Screenshot%202024-07-19%20at%201.59.17%E2%80%AFAM.png">
+<img src="https://github.com/RegiLoshi/Library-Web/blob/main/ScreenShots/WEB%20DEV%20PRINTS.pdf">
